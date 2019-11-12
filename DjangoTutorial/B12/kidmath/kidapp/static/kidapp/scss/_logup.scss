@@ -1,0 +1,30 @@
+.logup {
+  height: 100vh;
+  background-color: #49befe;
+  font-family: 'Press Start 2P', cursive;
+  background-image: url(../src/assets/img/sky-1.gif);
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: 'Press Start 2P', cursive;
+
+  .form {
+    background-image: url(../src/assets/img/astrorun-1.gif);
+    background-repeat: no-repeat;
+    background-position-y: center;
+    background-size: cover;
+
+    label {
+      color: white;
+    }
+
+    .form-control {
+      border-radius: unset;
+    }
+  }
+
+  // background-image: url(../img/giphy.gif), url(../img/summer.gif);
+  // background-repeat: no-repeat;
+  // background-position-y: 60% , 0%;
+  // background-position-x: 10%, 100%;
+  // background-size: 30%;
+}

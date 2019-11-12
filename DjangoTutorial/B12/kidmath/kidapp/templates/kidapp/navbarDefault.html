@@ -1,0 +1,36 @@
+<!-- NAV-BAR -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light main-navbar">
+  <a class="navbar-brand ml-3" href="{% url 'kidapp:courses' %}">Kids</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse d-md-flex flex-md-row justify-content-md-end" id="navbarNavDropdown">
+    <ul class="navbar-nav mr-3">
+      {% if userinfo %}
+        {% load static %}
+        <li class="nav-item p-2">
+          <img src="{% static 'kidapp/src/assets/img/award-1.png' %}" alt="default.png" srcset="" class="image-profile">
+          <span>{{ sumscore }}</span>
+        </li>
+        <li class="nav-item p-2">
+          <a type="button" class="btn btn-primary btn-become-member" href="{% url 'kidapp:user' userinfo.id %}">
+            <img src="{{ userinfo.profile_image.url }}" alt="default.png" srcset="" class="image-profile">
+            <span>{{ userinfo.username }}</span>
+          </a>
+        </li>
+        <li class="nav-item p-2">
+          <a type="button" class="btn btn-primary btn-login" href="{% url 'kidapp:signout' %}">Logout</a>
+        </li>
+      {% else %}
+        <li class="nav-item p-2">
+          <a type="button" class="btn btn-primary btn-become-member" href="{% url 'kidapp:signup' %}">Become a member</a>
+        </li>
+        <li class="nav-item p-2">
+          <a type="button" class="btn btn-primary btn-login" href="{% url 'kidapp:signin' %}">Login</a>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
+<!-- END-NAV-BAR -->

@@ -1,0 +1,43 @@
+
+{% extends "kidapp/default.html" %}
+
+{% block content %}
+  <div class="course d-flex flex-column">
+    {% include "kidapp/navbarDefault.html" %}
+
+    <div class="lession pb-5">
+      <div class="container">
+        {% for lession in lessions %}
+
+        <a href="{% url 'kidapp:detail' lession.0.id %}" class="d-block lession-item col-12 col-md-8 ml-auto mr-auto mt-5">
+            <div class="card">
+              <div class="position-absolute card-title-top rounded-pill mb-0 d-flex flex-row align-item-center border">
+                <h5 class="title flex-grow-1">{{ lession.0.card.title }}</h5>
+                
+                <div class="check text-center mr-2 d-flex flex-column justify-content-center">
+                  <!-- <i class="fa fa-check-circle"></i> -->
+                  {% if lession.1 %}
+                    <i class="fa fa-unlock-alt"></i>
+                  {% else %}
+                    <i class="fa fa-lock"></i>
+                  {% endif %}
+                </div>
+              </div>
+              <!-- {% load static %} -->
+              <img src="{{ lession.0.card.cover_image.url }}" class="card-img-top" alt="...">
+              <div class="card-body d-flex flex-row justify-content-center p-3 rounded-bottom border-top">
+                <div class="group-stars">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star fade-star"></i>
+                </div>
+              </div>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock content %}

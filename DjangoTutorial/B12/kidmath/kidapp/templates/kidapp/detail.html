@@ -1,0 +1,93 @@
+
+{% extends "kidapp/default.html" %}
+{% load static %}
+{% block content %}
+  <!-- LOGIN -->
+  <div class="learn d-flex flex-column">
+    {% include "kidapp/navbarDefault.html" %}
+
+    <!-- LEARN -->
+    <div class="vertical-tab">
+      <div class="tab">
+        <button class="tablinks active" onclick="openTabs(event, 'tutorial')" id="defaultOpen">Study</button>
+        <button class="tablinks" onclick="openTabs(event, 'step')">Guide</button>
+        <button class="tablinks" onclick="openTabs(event, 'comment')">More</button>
+      </div>
+      <audio id="myAudio">
+        <source src="{{ lession.sound.url }}" type="audio/ogg">
+        <source src="{{ lession.sound.url }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>      
+      <div id="tutorial" class="tabcontent learning">
+        <div class="container mt-5">
+          <div class="row">
+            <div class="col-md-6 d-flex flex-column align-items-end">
+              <img src="{{ lession.image.url }}" class="img-example border border-danger">
+              <div class="btn-group mt-3">
+                <button type="button" class="btn btn-primary" onclick="playAudio()">
+                  <img src="{% static 'kidapp/src/assets/img/speaker.png' %}" alt="" class="icon">
+                </button>
+                <button type="button" class="btn btn-primary">
+          
+                  <a href=" {% url 'kidapp:detail' lession.id|add:'1' %}">
+                    <img src="{% static 'kidapp/src/assets/img/next.png' %}" alt="" srcset="" class="icon">
+                  </a>
+                </button>
+              </div>
+            </div>
+            <div class="col-md-6 d-flex flex-column">
+              <div class="board">
+                <canvas id="canvas" class="canvas" width="300px" height="300px"></canvas>
+              </div>
+              <div class="btn-group mt-3">
+                <button type="button" class="btn btn-primary" id="btn-reset">
+                  <img src="{% static 'kidapp/src/assets/img/reset.png' %}" alt="" srcset="" class="icon">
+                </button>
+                <button type="submit" class="btn btn-primary" id="btn-submit">
+                  {% csrf_token %}
+                  <img src="{% static 'kidapp/src/assets/img/send.png' %}" alt="" srcset="" class="icon">
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="step" class="tabcontent">
+        <p class="guide">
+          {{ lession.guide }}
+        </p>
+      </div>
+
+      <div id="comment" class="tabcontent">
+        <h3>Tokyo</h3>
+        <p>Tokyo is the capital of Japan.</p>
+      </div>
+    </div>
+    <!-- END-LEARN -->
+  </div>
+
+  <script src="{% static 'kidapp/src/assets/js/canvasHandle.js' %}"></script>
+  <script>
+      
+      $("#btn-submit").on("click", ()=>{
+        let imageCanvas = document.getElementById("canvas").toDataURL();
+        $.ajax(
+          { type: "POST",
+          url: "/kidapp/ajax/",
+          data: {
+            image: imageCanvas,
+            lession: "{{ lession.id }}",
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+          },
+          success: function (data) {
+            // alert("predict: " + data["predict"] + " result: " + data["result"]);
+            var audio = new Audio(data["result"]);
+            audio.play();
+            alert(data['predict']);
+          },
+        });
+      });
+  </script>
+  <!-- END-LOGIN -->
+  {% endblock content %}
